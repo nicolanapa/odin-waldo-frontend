@@ -2,3 +2,11 @@
     padding: 0;
     margin: 0;
 }
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}

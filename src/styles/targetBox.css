@@ -1,0 +1,8 @@
+.target-box {
+    position: absolute;
+    backdrop-filter: blur(12px);
+    border-radius: 14px;
+    top: 45%;
+    left: 45%;
+    padding: 25px 22px;
+}
