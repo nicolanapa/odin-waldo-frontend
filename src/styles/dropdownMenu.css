@@ -1,6 +1,6 @@
-.target-box {
+.dropdown-menu {
     position: absolute;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(24px);
     border-radius: 14px;
     top: 45%;
     left: 45%;

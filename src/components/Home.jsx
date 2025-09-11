@@ -1,16 +1,16 @@
 import { useState } from "react";
-import TargetBox from "./TargetBox";
+import DropdownMenu from "./DropdownMenu";
 
 function Home() {
-    const [showTargetBox, setShowTargetBox] = useState(false);
+    const [showDropdownMenu, setShowDropdownMenu] = useState(false);
 
-    const toggleTargetBox = () => {
-        setShowTargetBox(!showTargetBox);
+    const toggleDropdownMenu = () => {
+        setShowDropdownMenu(!showDropdownMenu);
     };
 
     return (
         <main>
-            {showTargetBox && <TargetBox />}
+            {showDropdownMenu && <DropdownMenu />}
 
             <div className="image-container">
                 <img
@@ -18,7 +18,7 @@ function Home() {
                     alt="Test Photo"
                     width="90%"
                     height="auto"
-                    onClick={toggleTargetBox}
+                    onClick={toggleDropdownMenu}
                 />
             </div>
         </main>
