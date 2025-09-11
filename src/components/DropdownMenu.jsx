@@ -1,5 +1,5 @@
 import ListOfCharacters from "./ListOfCharacters";
-import "../styles/dropdownMenu.css";
+import "../styles/boxMenu.css";
 
 function DropdownMenu() {
     return (

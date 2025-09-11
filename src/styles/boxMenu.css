@@ -1,0 +1,18 @@
+.dropdown-menu,
+.target-box {
+    border-radius: 14px;
+}
+
+.dropdown-menu {
+    position: fixed;
+    backdrop-filter: blur(24px);
+    top: 5%;
+    left: 45%;
+    padding: 25px 22px;
+}
+
+.target-box {
+    position: absolute;
+    background-color: whitesmoke;
+    box-shadow: 0px 0px 12px 2px #ffffff;
+}
