@@ -1,16 +1,30 @@
 import { useState } from "react";
 import DropdownMenu from "./DropdownMenu";
+import TargetBox from "./TargetBox";
 
 function Home() {
+    const [showTargetBox, setShowTargetBox] = useState(false);
     const [showDropdownMenu, setShowDropdownMenu] = useState(false);
+    const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
-    const toggleDropdownMenu = () => {
+    const toggleBoxAndMenu = (e) => {
+        setShowTargetBox(!showTargetBox);
         setShowDropdownMenu(!showDropdownMenu);
+
+        console.log(e);
+        setCoordinates({ x: e.pageX, y: e.pageY });
     };
 
     return (
         <main>
             {showDropdownMenu && <DropdownMenu />}
+
+            {showTargetBox && (
+                <TargetBox
+                    coordinates={coordinates}
+                    toggleBoxAndMenu={toggleBoxAndMenu}
+                />
+            )}
 
             <div className="image-container">
                 <img
@@ -18,7 +32,7 @@ function Home() {
                     alt="Test Photo"
                     width="90%"
                     height="auto"
-                    onClick={toggleDropdownMenu}
+                    onClick={toggleBoxAndMenu}
                 />
             </div>
         </main>
