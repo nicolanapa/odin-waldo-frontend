@@ -2,7 +2,7 @@ import { useState } from "react";
 import DropdownMenu from "./DropdownMenu";
 import TargetBox from "./TargetBox";
 
-function Home() {
+function ImageContainer() {
     const [showTargetBox, setShowTargetBox] = useState(false);
     const [showDropdownMenu, setShowDropdownMenu] = useState(false);
     const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
@@ -16,7 +16,7 @@ function Home() {
     };
 
     return (
-        <main>
+        <>
             {showDropdownMenu && <DropdownMenu />}
 
             {showTargetBox && (
@@ -27,6 +27,7 @@ function Home() {
             )}
 
             <div className="image-container">
+                {/* Handle when a Image it's too wide or tall */}
                 <img
                     src="https://cdn.pixabay.com/photo/2025/08/12/11/55/mallards-9770059_1280.jpg"
                     alt="Test Photo"
@@ -35,8 +36,8 @@ function Home() {
                     onClick={toggleBoxAndMenu}
                 />
             </div>
-        </main>
+        </>
     );
 }
 
-export default Home;
+export default ImageContainer;
