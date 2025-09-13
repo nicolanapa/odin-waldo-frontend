@@ -14,7 +14,9 @@ function App() {
 
             setPhotoIDs(photoIDsArray);
 
-            const randomPhotoId = Math.floor(Math.random() * photoIDs.length);
+            const randomPhotoId = Math.floor(
+                Math.random() * photoIDsArray.length
+            );
 
             setCurrentImage(await getPhotoInfo(photoIDsArray[randomPhotoId]));
         },
