@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import ImageContainer from "./ImageContainer";
 import getPhotoInfo from "../scripts/getPhotoInfo";
+import jwtHandler from "../scripts/JwtHandler";
 
 function App() {
     const [photoIDs, setPhotoIDs] = useState([]);
     const [currentImage, setCurrentImage] = useState(false);
+    const [jwt, setJwt] = useState("");
 
     useEffect(
         () => async () => {
@@ -18,17 +20,33 @@ function App() {
                 Math.random() * photoIDsArray.length
             );
 
-            setCurrentImage(await getPhotoInfo(photoIDsArray[randomPhotoId]));
+            const photo = await getPhotoInfo(photoIDsArray[randomPhotoId]);
+            setCurrentImage(photo);
+            //setJwt(await jwtHandler.getNewJwt(photo));
         },
         []
     );
+
+    /*useEffect(
+        () => async () => {
+            currentImage !== false ? setJwt(await getNewJwt()) : "";
+        },
+        [currentImage]
+    );*/
+
+    setInterval(() => jwtHandler.getNewJwt(currentImage), 450000);
 
     // TODO: Automatically change an Image when it's finished
 
     return (
         <main>
             {photoIDs.length !== 0
-                ? currentImage && <ImageContainer image={currentImage} />
+                ? currentImage && (
+                      <ImageContainer
+                          image={currentImage}
+                          jwt={{ jwt: jwt, setJwt: setJwt }}
+                      />
+                  )
                 : "No Image Available"}
         </main>
     );
