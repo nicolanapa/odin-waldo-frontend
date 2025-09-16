@@ -22,7 +22,7 @@ function App() {
 
             const photo = await getPhotoInfo(photoIDsArray[randomPhotoId]);
             setCurrentImage(photo);
-            //setJwt(await jwtHandler.getNewJwt(photo));
+            setJwt(await jwtHandler.getNewJwt(photo));
         },
         []
     );
