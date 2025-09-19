@@ -16,6 +16,31 @@ class JwtHandler {
 
         return "";
     }
+
+    async checkPosition(jwt, postId, characterId, horizontal, vertical) {
+        const result = await fetch(
+            import.meta.env.VITE_FULL_HOSTNAME +
+                "/photo/" +
+                postId +
+                "/checkPosition/" +
+                characterId,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + jwt,
+                },
+                body: JSON.stringify({
+                    horizontal,
+                    vertical,
+                }),
+            }
+        ).then((res) => res.json());
+
+        console.log(horizontal, vertical, result);
+
+        return { jwt: result?.jwt ?? jwt, result };
+    }
 }
 
 export default new JwtHandler();
