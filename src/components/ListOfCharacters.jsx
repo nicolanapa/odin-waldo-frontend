@@ -1,12 +1,29 @@
-function ListOfCharacters() {
+import PropTypes from "prop-types";
+
+function ListOfCharacters({ characters, checkPosition }) {
     return (
         <>
-            <ul>
-                <li>Test1</li>
-                <li>Test2</li>
-            </ul>
+            {characters && (
+                <ul className="list-characters">
+                    {characters.map((character) => (
+                        <li key={character.id}>
+                            <button onClick={() => checkPosition(character.id)}>
+                                {character.name}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </>
     );
 }
+
+ListOfCharacters.propTypes = {
+    characters: PropTypes.arrayOf({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+    }).isRequired,
+    checkPosition: PropTypes.func.isRequired,
+};
 
 export default ListOfCharacters;
