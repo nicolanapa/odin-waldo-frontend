@@ -3,7 +3,7 @@ import DropdownMenu from "./DropdownMenu";
 import TargetBox from "./TargetBox";
 import PropTypes from "prop-types";
 
-function ImageContainer({ image }) {
+function ImageContainer({ image, jwt }) {
     const [showTargetBox, setShowTargetBox] = useState(false);
     const [showDropdownMenu, setShowDropdownMenu] = useState(false);
     const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
@@ -20,7 +20,14 @@ function ImageContainer({ image }) {
 
     return (
         <>
-            {showDropdownMenu && <DropdownMenu />}
+            {showDropdownMenu && (
+                <DropdownMenu
+                    jwt={jwt}
+                    postId={image.id}
+                    coordinates={coordinates}
+                    characters={image.characters}
+                />
+            )}
 
             {showTargetBox && (
                 <TargetBox
@@ -48,6 +55,10 @@ ImageContainer.propTypes = {
         id: PropTypes.number.isRequired,
         link: PropTypes.string.isRequired,
         characters: PropTypes.array.isRequired,
+    }).isRequired,
+    jwt: PropTypes.objectOf({
+        jwt: PropTypes.string.isRequired,
+        setJwt: PropTypes.func.isRequired,
     }).isRequired,
 };
 
