@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DropdownMenu from "./DropdownMenu";
 import TargetBox from "./TargetBox";
 import PropTypes from "prop-types";
+import checkIfAllCharactersAreFound from "../scripts/checkIfAllCharactersAreFound";
 
 function ImageContainer({ image, jwt }) {
     const [showTargetBox, setShowTargetBox] = useState(false);
     const [showDropdownMenu, setShowDropdownMenu] = useState(false);
     const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+    const [characters, setCharacters] = useState(image.characters);
 
     const toggleBoxAndMenu = (e) => {
         setShowTargetBox(!showTargetBox);
@@ -16,7 +18,15 @@ function ImageContainer({ image, jwt }) {
         setCoordinates({ x: e.pageX, y: e.pageY });
     };
 
-    console.log(image);
+    // console.log(image);
+
+    useEffect(() => {
+        if (checkIfAllCharactersAreFound(characters)) {
+            // handle end request
+            // ask name for the score
+            // handle confirm request
+        }
+    }, [characters]);
 
     return (
         <>
@@ -25,7 +35,7 @@ function ImageContainer({ image, jwt }) {
                     jwt={jwt}
                     postId={image.id}
                     coordinates={coordinates}
-                    characters={image.characters}
+                    characters={{ characters, setCharacters }}
                 />
             )}
 

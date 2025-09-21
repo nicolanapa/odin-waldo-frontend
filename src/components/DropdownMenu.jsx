@@ -2,11 +2,8 @@ import ListOfCharacters from "./ListOfCharacters";
 import "../styles/boxMenu.css";
 import PropTypes from "prop-types";
 import JwtHandler from "../scripts/JwtHandler";
-import { useState } from "react";
 
-function DropdownMenu({ jwt, postId, coordinates, characters = [] }) {
-    const [stateCharacters, setStateCharacters] = useState(characters);
-
+function DropdownMenu({ jwt, postId, coordinates, characters }) {
     const checkPosition = async (characterId) => {
         const res = await JwtHandler.checkPosition(
             jwt.jwt,
@@ -17,10 +14,16 @@ function DropdownMenu({ jwt, postId, coordinates, characters = [] }) {
         );
 
         if (res.result) {
-            for (let i = 0; i < characters.length; i++) {
-                if (characters[i].id === characterId) {
-                    characters[i].found = true;
-                    setStateCharacters([...characters]);
+            for (let i = 0; i < characters.characters.length; i++) {
+                if (
+                    characters.characters[i].id === characterId &&
+                    characters.characters[i]?.found !== true
+                ) {
+                    let tempCharacters = [...characters.characters];
+                    tempCharacters[i].found = true;
+
+                    characters.setCharacters([...characters.characters]);
+                    jwt.setJwt(res.jwt);
 
                     break;
                 }
@@ -31,7 +34,7 @@ function DropdownMenu({ jwt, postId, coordinates, characters = [] }) {
     return (
         <div className="dropdown-menu">
             <ListOfCharacters
-                characters={stateCharacters}
+                characters={characters.characters}
                 checkPosition={checkPosition}
             />
         </div>
@@ -48,9 +51,12 @@ DropdownMenu.propTypes = {
         x: PropTypes.number.isRequired,
         y: PropTypes.number.isRequired,
     }),
-    characters: PropTypes.arrayOf({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
+    characters: PropTypes.objectOf({
+        characters: PropTypes.arrayOf({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+        }).isRequired,
+        setCharacters: PropTypes.func.isRequired,
     }).isRequired,
 };
 
