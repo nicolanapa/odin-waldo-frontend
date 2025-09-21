@@ -2,10 +2,13 @@ import ListOfCharacters from "./ListOfCharacters";
 import "../styles/boxMenu.css";
 import PropTypes from "prop-types";
 import JwtHandler from "../scripts/JwtHandler";
+import { useState } from "react";
 
-function DropdownMenu({ jwt, postId, coordinates, characters }) {
-    const checkPosition = (characterId) =>
-        JwtHandler.checkPosition(
+function DropdownMenu({ jwt, postId, coordinates, characters = [] }) {
+    const [stateCharacters, setStateCharacters] = useState(characters);
+
+    const checkPosition = async (characterId) => {
+        const res = await JwtHandler.checkPosition(
             jwt.jwt,
             postId,
             characterId,
@@ -13,10 +16,22 @@ function DropdownMenu({ jwt, postId, coordinates, characters }) {
             coordinates.y /*keep in mind image centering*/
         );
 
+        if (res.result) {
+            for (let i = 0; i < characters.length; i++) {
+                if (characters[i].id === characterId) {
+                    characters[i].found = true;
+                    setStateCharacters([...characters]);
+
+                    break;
+                }
+            }
+        }
+    };
+
     return (
         <div className="dropdown-menu">
             <ListOfCharacters
-                characters={characters}
+                characters={stateCharacters}
                 checkPosition={checkPosition}
             />
         </div>
