@@ -34,7 +34,10 @@ function App() {
         [currentImage]
     );*/
 
-    setInterval(() => jwtHandler.getNewJwt(currentImage), 450000);
+    setInterval(
+        async () => setJwt(await jwtHandler.getNewJwt(currentImage)),
+        450000
+    );
 
     // TODO: Automatically change an Image when it's finished
 
