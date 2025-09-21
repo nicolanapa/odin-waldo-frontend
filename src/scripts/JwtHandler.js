@@ -39,7 +39,7 @@ class JwtHandler {
 
         console.log(horizontal, vertical, result);
 
-        return { jwt: result?.jwt ?? jwt, result };
+        return { jwt: result?.jwt ?? "", result: result.result };
     }
 }
 
