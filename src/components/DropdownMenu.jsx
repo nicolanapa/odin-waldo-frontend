@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 import JwtHandler from "../scripts/JwtHandler";
 
 function DropdownMenu({ jwt, postId, coordinates, characters }) {
+    // Fix losing of characters ??
+    // At the /end request, ImageContainer's Effect still sends the old JWT
+    // Since it doesn't update there
     const checkPosition = async (characterId) => {
         const res = await JwtHandler.checkPosition(
             jwt.jwt,
