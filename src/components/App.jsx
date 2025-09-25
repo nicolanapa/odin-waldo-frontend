@@ -34,10 +34,11 @@ function App() {
         [currentImage]
     );*/
 
-    setInterval(
+    /*setInterval(
+        // Fix too many JWT State updates
         async () => setJwt(await jwtHandler.getNewJwt(currentImage)),
         450000
-    );
+    );*/
 
     // TODO: Automatically change an Image when it's finished
 
