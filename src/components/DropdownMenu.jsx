@@ -12,8 +12,8 @@ function DropdownMenu({ jwt, postId, coordinates, characters }) {
             jwt.jwt,
             postId,
             characterId,
-            coordinates.x /*keep in mind image centering*/,
-            coordinates.y /*keep in mind image centering*/
+            coordinates.x,
+            coordinates.y
         );
 
         if (res.result) {
@@ -31,6 +31,8 @@ function DropdownMenu({ jwt, postId, coordinates, characters }) {
                     break;
                 }
             }
+        } else {
+            alert("Wrong character position");
         }
     };
 
