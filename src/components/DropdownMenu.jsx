@@ -3,10 +3,13 @@ import "../styles/boxMenu.css";
 import PropTypes from "prop-types";
 import JwtHandler from "../scripts/JwtHandler";
 
-function DropdownMenu({ jwt, postId, coordinates, characters }) {
-    // Fix losing of characters ??
-    // At the /end request, ImageContainer's Effect still sends the old JWT
-    // Since it doesn't update there
+function DropdownMenu({
+    jwt,
+    postId,
+    coordinates,
+    characters,
+    updateLeaderboard,
+}) {
     const checkPosition = async (characterId) => {
         const res = await JwtHandler.checkPosition(
             jwt.jwt,
@@ -28,11 +31,15 @@ function DropdownMenu({ jwt, postId, coordinates, characters }) {
                     characters.setCharacters([...characters.characters]);
                     jwt.setJwt(res.jwt);
 
+                    alert("Character found!");
+
+                    updateLeaderboard(res.jwt);
+
                     break;
                 }
             }
         } else {
-            alert("Wrong character position");
+            alert("Wrong character position!");
         }
     };
 
@@ -63,6 +70,7 @@ DropdownMenu.propTypes = {
         }).isRequired,
         setCharacters: PropTypes.func.isRequired,
     }).isRequired,
+    updateLeaderboard: PropTypes.func.isRequired,
 };
 
 export default DropdownMenu;

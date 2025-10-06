@@ -21,69 +21,65 @@ function ImageContainer({ image, jwt }) {
 
     // console.log(image);
 
-    useEffect(
-        () => async () => {
-            if (checkIfAllCharactersAreFound(characters)) {
-                if (nameRef.current) return;
+    const checkAndSendScoreToLeaderboard = async (checkPositionJwt) => {
+        if (checkPositionJwt === null || checkPositionJwt === undefined) {
+            return;
+        }
 
-                setTimeout(() => {}, 1000);
+        if (checkIfAllCharactersAreFound(characters)) {
+            if (nameRef.current) return;
 
-                let response = {};
-                const newJwt = await fetch(
-                    import.meta.env.VITE_FULL_HOSTNAME +
-                        "/photo/" +
-                        image.id +
-                        "/end/",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: "Bearer " + jwt.jwt,
-                        },
-                    }
-                ).then((res) => {
-                    response = res;
-                    return res.json();
-                });
-
-                if (response.ok) {
-                    jwt.setJwt(newJwt.jwt);
-                } else {
-                    return;
+            let response = {};
+            const newJwt = await fetch(
+                import.meta.env.VITE_FULL_HOSTNAME +
+                    "/photo/" +
+                    image.id +
+                    "/end/",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + checkPositionJwt,
+                    },
                 }
+            ).then((res) => {
+                response = res;
+                return res.json();
+            });
 
-                do {
-                    nameRef.current =
-                        window.prompt("Enter your name:", "anon") ?? "anon";
-                } while (
-                    nameRef.current.length < 2 ||
-                    nameRef.current.length > 32
-                );
-
-                const finalResponse = await fetch(
-                    import.meta.env.VITE_FULL_HOSTNAME +
-                        "/photo/" +
-                        image.id +
-                        "/confirm/",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: "Bearer " + jwt.jwt,
-                        },
-                        body: JSON.stringify({ name: nameRef.current }),
-                    }
-                ).then((res) => res);
-
-                if (finalResponse.ok) {
-                    // Show leaderboard
-                } else {
-                    alert("Something's wrong, please retry.");
-                }
+            if (response.ok) {
+                jwt.setJwt(newJwt.jwt);
+            } else {
+                return;
             }
-        },
-        [jwt.jwt, characters]
-    );
+
+            do {
+                nameRef.current =
+                    window.prompt("Enter your name:", "anon") ?? "anon";
+            } while (nameRef.current.length < 2 || nameRef.current.length > 32);
+
+            const finalResponse = await fetch(
+                import.meta.env.VITE_FULL_HOSTNAME +
+                    "/photo/" +
+                    image.id +
+                    "/confirm/",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + newJwt.jwt,
+                    },
+                    body: JSON.stringify({ name: nameRef.current }),
+                }
+            ).then((res) => res);
+
+            if (finalResponse.ok) {
+                // Show leaderboard
+            } else {
+                alert("Something's wrong, please retry.");
+            }
+        }
+    };
 
     return (
         <>
@@ -93,6 +89,7 @@ function ImageContainer({ image, jwt }) {
                     postId={image.id}
                     coordinates={coordinates}
                     characters={{ characters, setCharacters }}
+                    updateLeaderboard={checkAndSendScoreToLeaderboard}
                 />
             )}
 
