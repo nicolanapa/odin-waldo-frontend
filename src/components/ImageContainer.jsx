@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import DropdownMenu from "./DropdownMenu";
 import TargetBox from "./TargetBox";
 import PropTypes from "prop-types";
 import checkIfAllCharactersAreFound from "../scripts/checkIfAllCharactersAreFound";
+import Leaderboard from "./Leaderboard";
 
 function ImageContainer({ image, jwt }) {
     const [showTargetBox, setShowTargetBox] = useState(false);
@@ -74,7 +75,7 @@ function ImageContainer({ image, jwt }) {
             ).then((res) => res);
 
             if (finalResponse.ok) {
-                // Show leaderboard
+                return <Leaderboard postId={image.id} />;
             } else {
                 alert("Something's wrong, please retry.");
             }
