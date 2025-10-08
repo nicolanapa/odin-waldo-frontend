@@ -21,7 +21,7 @@ function Leaderboard({ postId }) {
             });
 
             // The front-end orders the leaderboard instead
-            // of the API
+            // of the API (doesn't really change things)
 
             if (getLeaderboard && getLeaderboard.length !== 0) {
                 let orderedLeaderboard = [];
@@ -34,7 +34,7 @@ function Leaderboard({ postId }) {
                 console.log("scores", scores);
 
                 for (let i = 0; i < scores.length; i++) {
-                    for (let i2 = i + 1; i2 < scores.length - 1; i2++) {
+                    for (let i2 = i + 1; i2 < scores.length; i2++) {
                         if (scores[i] > scores[i2]) {
                             let tempValue = scores[i];
 
@@ -42,18 +42,6 @@ function Leaderboard({ postId }) {
                             scores[i2] = tempValue;
                         }
                     }
-
-                    /* Last score in the array doesn't get ordered
-                    if (i === scores.length - 1) {
-                        for (let i2 = i; i2 >= 0; i2--) {
-                            if (scores[i] > scores[i2]) {
-                                let tempValue = scores[i];
-
-                                scores[i] = scores[i2];
-                                scores[i2] = tempValue;
-                            }
-                        }
-                    }*/
                 }
 
                 console.log("scores2", scores);
