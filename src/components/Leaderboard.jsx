@@ -31,8 +31,6 @@ function Leaderboard({ postId }) {
                     scores.push(getLeaderboard[i].score);
                 }
 
-                console.log("scores", scores);
-
                 for (let i = 0; i < scores.length; i++) {
                     for (let i2 = i + 1; i2 < scores.length; i2++) {
                         if (scores[i] > scores[i2]) {
@@ -44,8 +42,6 @@ function Leaderboard({ postId }) {
                     }
                 }
 
-                console.log("scores2", scores);
-
                 for (let i = 0; i < scores.length; i++) {
                     for (let i2 = 0; i2 < scores.length; i2++) {
                         if (scores[i] === getLeaderboard[i2].score) {
@@ -55,20 +51,6 @@ function Leaderboard({ postId }) {
                         }
                     }
                 }
-
-                //
-                let temp = [];
-                for (let i = 0; i < getLeaderboard.length; i++) {
-                    temp.push(getLeaderboard[i].score);
-                }
-                let temp2 = [];
-                for (let i = 0; i < orderedLeaderboard.length; i++) {
-                    temp2.push(orderedLeaderboard[i].score);
-                }
-
-                console.log("unordered", temp, "ordered", temp2);
-                console.log(getLeaderboard.length, orderedLeaderboard.length);
-                setLeaderboard(orderedLeaderboard);
             }
         },
         []
