@@ -61,8 +61,11 @@ function Leaderboard({ postId }) {
     return (
         <>
             <div className="leaderboard-container">
-                <h1>Leaderboard of photo {postId}</h1>
+                <a href="./">
+                    <button className="return-button">Return</button>
+                </a>
 
+                <h1>Leaderboard of photo {postId}</h1>
                 {leaderboard.length !== 0 && (
                     <ol className="leaderboard">
                         {leaderboard.map((score) => {
