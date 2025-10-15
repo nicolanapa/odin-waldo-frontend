@@ -17,7 +17,7 @@ function ImageContainer({ image, jwt }) {
         setShowTargetBox(!showTargetBox);
         setShowDropdownMenu(!showDropdownMenu);
 
-        console.log(e);
+        // console.log(e);
         setCoordinates({ x: e.pageX, y: e.pageY });
     };
 

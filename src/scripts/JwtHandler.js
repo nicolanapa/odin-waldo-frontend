@@ -9,8 +9,6 @@ class JwtHandler {
                 { method: "POST" }
             ).then((res) => res.json());
 
-            console.log(jwt.jwt);
-
             return jwt.jwt;
         }
 
@@ -37,7 +35,7 @@ class JwtHandler {
             }
         ).then((res) => res.json());
 
-        console.log(horizontal, vertical, result);
+        // console.log(horizontal, vertical, result);
 
         return { jwt: result?.jwt ?? "", result: result.result };
     }

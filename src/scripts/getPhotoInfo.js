@@ -3,7 +3,7 @@ async function getPhotoInfo(id) {
         import.meta.env.VITE_FULL_HOSTNAME + "/photo/" + id
     ).then((res) => res.json());
 
-    console.log(photo);
+    // console.log(photo);
 
     return photo;
 }
