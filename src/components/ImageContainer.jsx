@@ -10,6 +10,7 @@ function ImageContainer({ image, jwt }) {
     const [showDropdownMenu, setShowDropdownMenu] = useState(false);
     const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
     const [characters, setCharacters] = useState(image.characters);
+    const [displayLeaderboard, setDisplayLeaderboard] = useState(false);
     const nameRef = useRef("");
 
     const toggleBoxAndMenu = (e) => {
@@ -75,7 +76,7 @@ function ImageContainer({ image, jwt }) {
             ).then((res) => res);
 
             if (finalResponse.ok) {
-                return <Leaderboard postId={image.id} />;
+                setDisplayLeaderboard(true);
             } else {
                 alert("Something's wrong, please retry.");
             }
@@ -84,33 +85,36 @@ function ImageContainer({ image, jwt }) {
 
     return (
         <>
-            {showDropdownMenu && (
-                <DropdownMenu
-                    jwt={jwt}
-                    postId={image.id}
-                    coordinates={coordinates}
-                    characters={{ characters, setCharacters }}
-                    updateLeaderboard={checkAndSendScoreToLeaderboard}
-                />
+            {displayLeaderboard ? (
+                <Leaderboard postId={image.id} />
+            ) : (
+                <>
+                    {showDropdownMenu && (
+                        <DropdownMenu
+                            jwt={jwt}
+                            postId={image.id}
+                            coordinates={coordinates}
+                            characters={{ characters, setCharacters }}
+                            updateLeaderboard={checkAndSendScoreToLeaderboard}
+                        />
+                    )}
+                    {showTargetBox && (
+                        <TargetBox
+                            coordinates={coordinates}
+                            toggleBoxAndMenu={toggleBoxAndMenu}
+                        />
+                    )}
+                    <div className="image-container">
+                        <img
+                            src={image.link}
+                            alt="Test Photo"
+                            width="100%"
+                            height="auto"
+                            onClick={toggleBoxAndMenu}
+                        />
+                    </div>
+                </>
             )}
-
-            {showTargetBox && (
-                <TargetBox
-                    coordinates={coordinates}
-                    toggleBoxAndMenu={toggleBoxAndMenu}
-                />
-            )}
-
-            <div className="image-container">
-                {/* Handle when a Image it's too wide or tall */}
-                <img
-                    src={image.link}
-                    alt="Test Photo"
-                    width="100%"
-                    height="auto"
-                    onClick={toggleBoxAndMenu}
-                />
-            </div>
         </>
     );
 }
