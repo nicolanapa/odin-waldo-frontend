@@ -51,6 +51,8 @@ function Leaderboard({ postId }) {
                         }
                     }
                 }
+
+                setLeaderboard(orderedLeaderboard);
             }
         },
         []
